@@ -149,6 +149,24 @@ def test_enroll_result_page():
         # driver.quit()
         print("✅ Testing Complete: test_enroll_result_page function")
         user_logout()
+        
+def test_grade_page():
+    user_login()
+    try:
+        driver.get("https://my.ku.th/std/grade")
+        response = requests.get("https://my.ku.th/std/grade")
+        sleep(time)
+        
+        assert response.status_code == 200
+         
+    except Exception as e:
+        # print(f"Test failed: {e}")
+        print("❌ Test failed: test_grade_page function")
+    else:
+        sleep(time)
+        # driver.quit()
+        print("✅ Testing Complete: test_grade_page function")
+        user_logout()
 
 # Execute the test case
 test_user_login()
@@ -158,3 +176,8 @@ sleep(time)
 test_view_schedule()
 sleep(time)
 test_search_registrable_subject()
+test_payment_page()
+sleep(time)
+test_enroll_result_page()
+sleep(time)
+test_grade_page()
