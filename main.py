@@ -1,13 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 from dotenv import dotenv_values
 
 
-config = dotenv_values(".env")
+config = dotenv_values("My.env")
 username = config["USERNAME"]
 password = config["PASSWORD"]
 time = int(config["TIME"])
@@ -17,10 +15,8 @@ option = Options()
 # option.add_experimental_option("detach", True)
 # option.add_argument("--headless")
 
-service = Service(ChromeDriverManager().install())
-
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
-                          options=option)
+driver = webdriver.Safari()
+driver.set_window_size(1600, 1200)
 
 def user_login():
     driver.get("https://my.ku.th/login")
