@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 from dotenv import dotenv_values
+import requests
 
 
 config = dotenv_values(".env")
@@ -35,6 +36,10 @@ def user_login():
     # Click to login
     driver.find_element(By.XPATH, "//button[@class='btn btn-success btn-block']").click()
     sleep(time)
+
+def user_logout():
+    driver.find_element(By.XPATH, '//*[@id="root"]/div/div[1]/div/nav/div[6]/div/i').click()
+    sleep(time)
     
 
 def test_user_login():
@@ -54,6 +59,36 @@ def test_user_login():
         sleep(time)
         # driver.quit()
         print("✅ Testing Complete: test_user_login function")
+        
+def test_user_logout():
+    try:
+        user_logout()
+    
+    except Exception as e:
+        # print(f"Test failed: {e}")
+        print("❌ Test failed: test_user_logout function")
+    else:
+        sleep(time)
+        # driver.quit()
+        print("✅ Testing Complete: test_user_logout function")
+        
+def test_view_schedule():
+    user_login()
+    try:
+        driver.get("https://my.ku.th/std/classroom")
+        response = requests.get("https://my.ku.th/std/classroom")
+        sleep(time)
+        
+        assert response.status_code == 200
+         
+    except Exception as e:
+        # print(f"Test failed: {e}")
+        print("❌ Test failed: test_search_registrable_subject function")
+    else:
+        sleep(time)
+        # driver.quit()
+        print("✅ Testing Complete: test_view_schedule function")
+        user_logout()
 
 def test_search_registrable_subject():
     # Login
@@ -81,8 +116,72 @@ def test_search_registrable_subject():
         sleep(time)
         # driver.quit()
         print("✅ Testing Complete: test_search_registrable_subject function")
+        user_logout()
         
+def test_payment_page():
+    user_login()
+    try:
+        driver.get("https://my.ku.th/std/financeStudent")
+        response = requests.get("https://my.ku.th/std/financeStudent")
+        sleep(time)
+        
+        assert response.status_code == 200
+         
+    except Exception as e:
+        # print(f"Test failed: {e}")
+        print("❌ Test failed: test_payment_page function")
+    else:
+        sleep(time)
+        # driver.quit()
+        print("✅ Testing Complete: test_payment_page function")
+        user_logout()
+        
+def test_enroll_result_page():
+    user_login()
+    try:
+        driver.get("https://my.ku.th/std/enrollresult")
+        response = requests.get("https://my.ku.th/std/enrollresult")
+        sleep(time)
+        
+        assert response.status_code == 200
+         
+    except Exception as e:
+        # print(f"Test failed: {e}")
+        print("❌ Test failed: test_enroll_result_page function")
+    else:
+        sleep(time)
+        # driver.quit()
+        print("✅ Testing Complete: test_enroll_result_page function")
+        user_logout()
+        
+def test_grade_page():
+    user_login()
+    try:
+        driver.get("https://my.ku.th/std/grade")
+        response = requests.get("https://my.ku.th/std/grade")
+        sleep(time)
+        
+        assert response.status_code == 200
+         
+    except Exception as e:
+        # print(f"Test failed: {e}")
+        print("❌ Test failed: test_grade_page function")
+    else:
+        sleep(time)
+        # driver.quit()
+        print("✅ Testing Complete: test_grade_page function")
+        user_logout()
+
 # Execute the test case
 test_user_login()
 sleep(time)
+test_user_logout()
+sleep(time)
+test_view_schedule()
+sleep(time)
 test_search_registrable_subject()
+test_payment_page()
+sleep(time)
+test_enroll_result_page()
+sleep(time)
+test_grade_page()
