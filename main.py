@@ -5,7 +5,6 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 from dotenv import dotenv_values
-import requests
 
 
 config = dotenv_values(".env")
@@ -22,6 +21,7 @@ service = Service(ChromeDriverManager().install())
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                           options=option)
+driver.maximize_window()
 
 def user_login():
     driver.get("https://my.ku.th/login")
@@ -76,14 +76,15 @@ def test_view_schedule():
     user_login()
     try:
         driver.get("https://my.ku.th/std/classroom")
-        response = requests.get("https://my.ku.th/std/classroom")
         sleep(time)
         
-        assert response.status_code == 200
+        success_message = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[1]/div/div/div/div/div/div[1]/div/div[1]/div/div[1]')
+
+        assert "ตารางเรียน/ตารางสอบ" in success_message.text
          
     except Exception as e:
         # print(f"Test failed: {e}")
-        print("❌ Test failed: test_search_registrable_subject function")
+        print("❌ Test failed: test_view_schedule function")
     else:
         sleep(time)
         # driver.quit()
@@ -122,10 +123,11 @@ def test_payment_page():
     user_login()
     try:
         driver.get("https://my.ku.th/std/financeStudent")
-        response = requests.get("https://my.ku.th/std/financeStudent")
         sleep(time)
         
-        assert response.status_code == 200
+        success_message = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[1]/div/div/div/div/div/div[1]/div/div[1]/div/div[1]/h4')
+
+        assert "การเงินนิสิต" in success_message.text
          
     except Exception as e:
         # print(f"Test failed: {e}")
@@ -140,10 +142,11 @@ def test_enroll_result_page():
     user_login()
     try:
         driver.get("https://my.ku.th/std/enrollresult")
-        response = requests.get("https://my.ku.th/std/enrollresult")
         sleep(time)
         
-        assert response.status_code == 200
+        success_message = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[1]/div/div/div/div/div[1]/div/div[1]/div/div[1]/h4')
+
+        assert "ผลการลงทะเบียน" in success_message.text
          
     except Exception as e:
         # print(f"Test failed: {e}")
@@ -158,10 +161,11 @@ def test_grade_page():
     user_login()
     try:
         driver.get("https://my.ku.th/std/grade")
-        response = requests.get("https://my.ku.th/std/grade")
         sleep(time)
         
-        assert response.status_code == 200
+        success_message = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[1]/div/div/div/div/div[1]/div/div[1]/div/div[1]/h4')
+
+        assert "ตรวจสอบผลการเรียน" in success_message.text
          
     except Exception as e:
         # print(f"Test failed: {e}")
